@@ -1,13 +1,13 @@
 from selenium import webdriver
-# from bs4 import BeautifulSoup
 import pandas as pd
 
 # authentication
 username = 'some3985'
-password = ''
+password = input("Password? ")
 
 # driver = webdriver.Firefox()
 driver = webdriver.PhantomJS('phantomjs.exe')
+driver.set_window_size(1000,500)
 
 # enter credentials into Shibboleth identity provider
 try:
@@ -23,15 +23,13 @@ try:
 except Exception as e:
     driver.save_screenshot('screenshot.png')
 
-# soup = BeautifulSoup(driver.page_source, 'html.parser')
-
 df = pd.read_html(driver.page_source)[0]
 
 meal = {
-    'lunch' : 1, 
-    'lunch_v' : 2, 
-    'dinner' : 3, 
-    'dinner_v' : 4
+    'lun' : 1, 
+    'lun_v' : 2, 
+    'din' : 3, 
+    'din_v' : 4
 }
 
 day = {
@@ -46,4 +44,4 @@ day = {
 
 # meals should be called in the form df[meal][day]
 # example
-df[meal['dinner']][day['thu']]
+print(df[meal['lun']][day['wed']])
